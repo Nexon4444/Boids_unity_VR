@@ -10,11 +10,11 @@ public struct BehaviorStruct{
     }
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Composite")]
-public class CompositeBehavior : FlockBehavior<FlockAgent>
+public class CompositeBehavior : FlockBehavior
 {
     public BehaviorStruct[] behaviorStructs;
     
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(Agent agent, List<Transform> context, Flock flock)
     {
 
     //     //set up move
@@ -38,7 +38,7 @@ public class CompositeBehavior : FlockBehavior<FlockAgent>
         }
         return move;
     }
-    public override Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
+    public Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
     {
         return Vector2.zero;
     }

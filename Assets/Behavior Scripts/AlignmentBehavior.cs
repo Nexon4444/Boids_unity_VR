@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Alignment")]
-public class AlignmentBehavior : FlockBehavior, ScriptableObject
+public class AlignmentBehavior : FlockBehavior
 {
-    public int x;
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(Agent agent, List<Transform> context, Flock flock)
     {
         //if no neighbors, maintain current alignment
         if (context.Count == 0)
@@ -24,7 +23,7 @@ public class AlignmentBehavior : FlockBehavior, ScriptableObject
 
         return alignmentMove;
     }
-    public override Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
+    public Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
     {
         return Vector2.zero;
     }

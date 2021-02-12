@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // [CreateAssetMenu(menuName = "Flock/Behavior/Avoidance")]
-public class AvoidanceBehavior : FlockBehavior<FlockAgent>
+public class AvoidanceBehavior : FlockBehavior
 {
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(Agent agent, List<Transform> context, Flock flock)
     {
         //if no neighbors, return no adjustment\
          
-        if (context.Count == 0)
+        if ((context.Count == 0) || (agent is ObstacleAgent))
             return Vector2.zero;
 
         //add all points together and average
@@ -31,8 +31,8 @@ public class AvoidanceBehavior : FlockBehavior<FlockAgent>
         return avoidanceMove;
     }
 
-    public override Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
-    {
-        return Vector2.zero;
-    }
+    // public Vector2 CalculateMove(ObstacleAgent agent, List<Transform> context, Flock flock)
+    // {
+    //     return Vector2.zero;
+    // }
 }
