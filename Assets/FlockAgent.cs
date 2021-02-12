@@ -5,7 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class FlockAgent : Agent
 {
-    public void Move(Vector2 velocity)
+    void Start()
+    {
+        agentCollider = GetComponent<Collider2D>();
+        agentCollider.gameObject.tag = "FlockAgent";
+    }
+    override public void Move(Vector2 velocity)
     {
         transform.up = velocity;
         transform.position += (Vector3)velocity * Time.deltaTime;

@@ -5,7 +5,8 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public FlockAgent agentPrefab;
-    List<FlockAgent> agents = new List<FlockAgent>();
+    public ObstacleAgent obstaclePrefab;
+    List<Agent> agents = new List<Agent>();
     public FlockBehavior behavior;
 
     [Range(10, 500)]
@@ -20,6 +21,9 @@ public class Flock : MonoBehaviour
     public float neighborRadius = 1.5f;
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
+
+    [Range(1f, 100f)]
+    public float obstacleRadius = 10f;
 
     float squareMaxSpeed;
     float squareNeighborRadius;
@@ -45,12 +49,22 @@ public class Flock : MonoBehaviour
             newAgent.Initialize(this);
             agents.Add(newAgent);
         }
+
+        ObstacleAgent newObstacle = Instantiate(
+                obstaclePrefab,
+                Vector2.zero,
+                Quaternion.Euler(Vector3.forward * 0f),
+                transform
+                );
+        newObstacle.name = "obstacle";
+        newObstacle.Initialize(this);
+        agents.Add(newObstacle);
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (FlockAgent agent in agents)
+        foreach (Agent agent in agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
 
@@ -67,7 +81,7 @@ public class Flock : MonoBehaviour
         }
     }
 
-    List<Transform> GetNearbyObjects(FlockAgent agent)
+    List<Transform> GetNearbyObjects(Agent agent)
     {
         List<Transform> context = new List<Transform>();
         Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius);
@@ -78,6 +92,16 @@ public class Flock : MonoBehaviour
                 context.Add(c.transform);
             }
         }
+
+        contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, obstacleRadius);
+        foreach (Collider2D c in contextColliders)
+        {
+            if (c != agent.AgentCollider && c.gameObject.tag == "ObstacleAgent")
+            {
+                context.Add(c.transform);
+            }
+        }
+
         return context;
     }
 

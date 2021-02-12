@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "Flock/Behavior/AvoidanceObstacle")]
 public class AvoidanceObstacle : FlockBehavior
 {
     public override Vector2 CalculateMove(Agent agent, List<Transform> context, Flock flock)
